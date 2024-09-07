@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Flashcards</title>
+    <link rel="stylesheet" href="{% static 'flashcards/styles.css' %}">
+    <script src="{% static 'flashcards/study.js' %}"></script>
+</head>
+<body>
+    <nav>
+        <!-- Add navigation menu items -->
+    </nav>
+    <main>
+        {% block content %}
+        <h1>Welcome to Language Flashcards</h1>
+        <!-- Add content for the home page -->
+        {% endblock %}
+    </main>
+</body>
+</html>
