@@ -19,7 +19,17 @@ from django.urls import path, include
 from flashcards import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('', views.index, name='index'),
+    path('', views.home, name='home'),
     path('register/', views.register, name='register'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('profile/', views.profile, name='profile'),
+    path('create_deck/', views.create_deck, name='create_deck'),
+    path('deck/<int:deck_id>/', views.deck_detail, name='deck_detail'),
+    path('deck/<int:deck_id>/add_flashcard/', views.add_flashcard, name='add_flashcard'),
+    path('deck/<int:deck_id>/edit_flashcard/<int:card_id>/', views.edit_flashcard, name='edit_flashcard'),
+    path('deck/<int:deck_id>/delete_flashcard/<int:card_id>/', views.delete_flashcard, name='delete_flashcard'),
+    path('study/', views.study, name='study'),
+    path('deck/<int:deck_id>/study/', views.study_deck, name='study_deck'),
+    path('study/<int:deck_id>/results/', views.study_results, name='study_results'),
 ]

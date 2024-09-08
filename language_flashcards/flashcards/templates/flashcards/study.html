@@ -1,0 +1,37 @@
+{% extends 'flashcards/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Study Session: {{ deck.name }}</h2>
+
+<div class="scoreboard">
+    <p>Progress: 0 / {{ deck.flashcard_set.count }} (0%)</p>
+    <div class="progress-bar">
+        <div class="progress" style="width: 0%;"></div>
+    </div>
+</div>
+
+<div class="flashcard" id="flashcard">
+    <div class="flashcard-inner">
+        <div class="flashcard-front"></div>
+        <div class="flashcard-back"></div>
+    </div>
+</div>
+
+<button id="flip-btn" class="btn btn-primary">Flip Card</button>
+
+<form id="result-form">
+    <button type="submit" name="result" value="correct" class="btn btn-success">I got it right</button>
+    <button type="submit" name="result" value="incorrect" class="btn btn-danger">I got it wrong</button>
+</form>
+
+<a href="{% url 'study' %}" class="btn btn-secondary" id="back-to-list">Back to Deck List</a>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const deckId = {{ deck.id }};
+</script>
+<script src="{% static 'flashcards/study.js' %}"></script>
+{% endblock %}

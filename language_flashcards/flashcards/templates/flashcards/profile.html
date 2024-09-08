@@ -1,0 +1,15 @@
+{% extends 'flashcards/base.html' %}
+
+{% block content %}
+<h2>{{ user.username }}'s Profile</h2>
+<p>Email: {{ user.email }}</p>
+<h3>Your Decks</h3>
+<ul>
+    {% for deck in decks %}
+        <li><a href="{% url 'deck_detail' deck.id %}">{{ deck.name }}</a></li>
+    {% empty %}
+        <li>You haven't created any decks yet.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'create_deck' %}">Create a New Deck</a>
+{% endblock %}

@@ -1,26 +1,81 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const cardElement = document.querySelector('.flashcard');
-    const frontElement = document.querySelector('.front');
-    const backElement = document.querySelector('.back');
-    const flipButton = document.querySelector('#flip-button');
-    const nextButton = document.querySelector('#next-button');
+document.addEventListener('DOMContentLoaded', function() {
+    const flashcard = document.getElementById('flashcard');
+    const flipBtn = document.getElementById('flip-btn');
+    const resultForm = document.getElementById('result-form');
+    const progressBar = document.querySelector('.progress');
+    const progressText = document.querySelector('.scoreboard p');
+    
+    let flashcards = [];
+    let currentCardIndex = 0;
+    let correctCount = 0;
 
-    let isFlipped = false;
+    // Fetch flashcards data
+    fetch(`/api/flashcards/${deckId}/`)
+        .then(response => response.json())
+        .then(data => {
+            flashcards = data;
+            shuffleArray(flashcards);
+            showCard();
+            updateProgress();
+        });
 
-    flipButton.addEventListener('click', () => {
-        isFlipped = !isFlipped;
-        cardElement.classList.toggle('flipped');
-    });
+    if (flipBtn && flashcard) {
+        flipBtn.addEventListener('click', function() {
+            flashcard.classList.toggle('flipped');
+        });
+    }
 
-    nextButton.addEventListener('click', () => {
-        // AJAX request to get next card
-        fetch('/api/next-card/')
-            .then(response => response.json())
-            .then(data => {
-                frontElement.textContent = data.front;
-                backElement.textContent = data.back;
-                isFlipped = false;
-                cardElement.classList.remove('flipped');
-            });
-    });
+    if (resultForm) {
+        resultForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const result = e.submitter.value;
+            if (result === 'correct') correctCount++;
+            currentCardIndex++;
+            updateProgress();
+            if (currentCardIndex < flashcards.length) {
+                showCard();
+            } else {
+                showResults();
+            }
+        });
+    }
+
+    function showCard() {
+        const card = flashcards[currentCardIndex];
+        const frontElement = document.querySelector('.flashcard-front');
+        const backElement = document.querySelector('.flashcard-back');
+        if (frontElement && backElement) {
+            frontElement.textContent = card.front;
+            backElement.textContent = card.back;
+            flashcard.classList.remove('flipped');
+        } else {
+            console.error('Front or back element not found');
+        }
+    }
+
+    function updateProgress() {
+        const progress = ((currentCardIndex + 1) / flashcards.length) * 100;
+        progressBar.style.width = `${progress}%`;
+        progressText.textContent = `Progress: ${correctCount} / ${currentCardIndex + 1} (${Math.round(progress)}%)`;
+    }
+
+    function showResults() {
+        const accuracy = (correctCount / flashcards.length) * 100;
+        const resultsHtml = `
+            <h2>Study Results</h2>
+            <p>Correct answers: ${correctCount}</p>
+            <p>Total cards: ${flashcards.length}</p>
+            <p>Accuracy: ${Math.round(accuracy)}%</p>
+            <a href="/study/${deckId}/" class="btn btn-primary">Restart Deck</a>
+            <a href="/study/" class="btn btn-secondary">Back to Deck List</a>
+        `;
+        document.querySelector('main').innerHTML = resultsHtml;
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
 });

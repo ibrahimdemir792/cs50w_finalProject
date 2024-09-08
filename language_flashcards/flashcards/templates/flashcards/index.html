@@ -1,22 +1,36 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Language Flashcards</title>
-    <link rel="stylesheet" href="{% static 'flashcards/styles.css' %}">
-    <script src="{% static 'flashcards/study.js' %}"></script>
-</head>
-<body>
-    <nav>
-        <!-- Add navigation menu items -->
-    </nav>
-    <main>
-        {% block content %}
-        <h1>Welcome to Language Flashcards</h1>
-        <!-- Add content for the home page -->
-        {% endblock %}
-    </main>
-</body>
-</html>
+
+{% extends 'flashcards/base.html' %}
+
+
+{% block title %}Language Flashcards - Home{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to Language Flashcards</h1>
+    <p class="subtitle">Boost your language skills with our interactive flashcard system</p>
+    {% if not user.is_authenticated %}
+        <div class="cta-buttons">
+            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+            <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+        </div>
+    {% endif %}
+</div>
+
+{% if user.is_authenticated %}
+    <section class="deck-list">
+        <h2>Your Decks</h2>
+        {% if decks %}
+            <div class="deck-grid">
+                {% for deck in decks %}
+                    <a href="{% url 'study_deck' deck.id %}" class="deck-card">
+                        <h3>{{ deck.name }}</h3>
+                        <p>{{ deck.flashcard_set.count }} cards</p>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-state">You haven't created any decks yet. <a href="{% url 'create_deck' %}">Create your first deck</a>!</p>
+        {% endif %}
+    </section>
+{% endif %}
+{% endblock %}

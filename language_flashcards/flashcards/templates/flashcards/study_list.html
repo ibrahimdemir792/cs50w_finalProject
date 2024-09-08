@@ -1,0 +1,21 @@
+{% extends 'flashcards/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Choose a Deck to Study</h2>
+
+{% if decks %}
+    <div class="deck-grid">
+        {% for deck in decks %}
+            <a href="{% url 'study_deck' deck.id %}" class="deck-card">
+                <div class="deck-card-content">
+                    <h3>{{ deck.name }}</h3>
+                    <p>{{ deck.flashcard_set.count }} cards</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>You don't have any decks yet. <a href="{% url 'create_deck' %}">Create a deck</a> to start studying!</p>
+{% endif %}
+{% endblock %}

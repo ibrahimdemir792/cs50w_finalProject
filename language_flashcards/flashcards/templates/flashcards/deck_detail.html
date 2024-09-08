@@ -1,0 +1,24 @@
+{% extends 'flashcards/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>{{ deck.name }}</h2>
+<p>{{ deck.description }}</p>
+
+<h3>Flashcards</h3>
+<ul id="flashcard-list">
+    {% for card in flashcards %}
+        <li>
+            <strong>Front:</strong> {{ card.front }}
+            <strong>Back:</strong> {{ card.back }}
+            <a href="{% url 'edit_flashcard' deck.id card.id %}">Edit</a>
+            <a href="{% url 'delete_flashcard' deck.id card.id %}">Delete</a>
+        </li>
+    {% empty %}
+        <li>No flashcards in this deck yet.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'add_flashcard' deck.id %}">Add Flashcard</a>
+<a href="{% url 'study_deck' deck.id %}">Study This Deck</a>
+{% endblock %}
