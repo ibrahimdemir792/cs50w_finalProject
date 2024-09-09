@@ -113,7 +113,7 @@ def study(request):
 @login_required
 def study_deck(request, deck_id):
     deck = get_object_or_404(Deck, id=deck_id, user=request.user)
-    return render(request, 'flashcards/study.html', {'deck': deck})
+    return render(request, 'flashcards/study.html', {'deck': deck, 'deck_id': deck_id})
 
 @login_required
 def get_flashcards(request, deck_id):

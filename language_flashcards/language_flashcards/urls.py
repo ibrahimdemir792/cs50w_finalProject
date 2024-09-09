@@ -32,4 +32,5 @@ urlpatterns = [
     path('study/', views.study, name='study'),
     path('deck/<int:deck_id>/study/', views.study_deck, name='study_deck'),
     path('study/<int:deck_id>/results/', views.study_results, name='study_results'),
+    path('api/flashcards/<int:deck_id>/', views.get_flashcards, name='get_flashcards'),
 ]

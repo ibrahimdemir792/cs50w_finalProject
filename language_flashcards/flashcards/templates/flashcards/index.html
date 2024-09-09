@@ -1,11 +1,9 @@
-
 {% extends 'flashcards/base.html' %}
-
 
 {% block title %}Language Flashcards - Home{% endblock %}
 
 {% block content %}
-<div class="hero">
+<div id="welcome-container" class="{% if user.is_authenticated %}authenticated{% else %}not-authenticated{% endif %}">
     <h1>Welcome to Language Flashcards</h1>
     <p class="subtitle">Boost your language skills with our interactive flashcard system</p>
     {% if not user.is_authenticated %}
@@ -13,11 +11,17 @@
             <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
             <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
         </div>
+    {% else %}
+        <p class="welcome-message">Welcome back, {{ user.username }}!</p>
+        <div class="cta-buttons">
+            <a href="{% url 'create_deck' %}" class="btn btn-primary">Create New Deck</a>
+            <a href="{% url 'study' %}" class="btn btn-secondary">Start Studying</a>
+        </div>
     {% endif %}
 </div>
 
 {% if user.is_authenticated %}
-    <section class="deck-list">
+    <section class="deck-list" id="deck-list">
         <h2>Your Decks</h2>
         {% if decks %}
             <div class="deck-grid">
