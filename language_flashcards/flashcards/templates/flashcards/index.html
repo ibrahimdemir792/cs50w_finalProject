@@ -19,22 +19,4 @@
         </div>
     {% endif %}
 </div>
-
-{% if user.is_authenticated %}
-    <section class="deck-list" id="deck-list">
-        <h2>Your Decks</h2>
-        {% if decks %}
-            <div class="deck-grid">
-                {% for deck in decks %}
-                    <a href="{% url 'study_deck' deck.id %}" class="deck-card">
-                        <h3>{{ deck.name }}</h3>
-                        <p>{{ deck.flashcard_set.count }} cards</p>
-                    </a>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p class="empty-state">You haven't created any decks yet. <a href="{% url 'create_deck' %}">Create your first deck</a>!</p>
-        {% endif %}
-    </section>
-{% endif %}
 {% endblock %}

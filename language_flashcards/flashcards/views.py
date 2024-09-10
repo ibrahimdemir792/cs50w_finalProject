@@ -5,8 +5,10 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Deck, Flashcard
 from .forms import DeckForm, FlashcardForm
 from django.utils import timezone
-import random
 from django.http import JsonResponse
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+
 
 def home(request):
     if request.user.is_authenticated:
@@ -103,6 +105,14 @@ def delete_flashcard(request, deck_id, card_id):
     deck = get_object_or_404(Deck, id=deck_id, user=request.user)
     flashcard = get_object_or_404(Flashcard, id=card_id, deck=deck)
     flashcard.delete()
+    return redirect('deck_detail', deck_id=deck.id)
+
+@login_required
+def delete_deck(request, deck_id):
+    deck = get_object_or_404(Deck, id=deck_id, user=request.user)
+    if request.method == 'POST':
+        deck.delete()
+        return HttpResponseRedirect(reverse('profile'))
     return redirect('deck_detail', deck_id=deck.id)
 
 @login_required

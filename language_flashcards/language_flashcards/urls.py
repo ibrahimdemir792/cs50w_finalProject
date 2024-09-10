@@ -29,8 +29,10 @@ urlpatterns = [
     path('deck/<int:deck_id>/add_flashcard/', views.add_flashcard, name='add_flashcard'),
     path('deck/<int:deck_id>/edit_flashcard/<int:card_id>/', views.edit_flashcard, name='edit_flashcard'),
     path('deck/<int:deck_id>/delete_flashcard/<int:card_id>/', views.delete_flashcard, name='delete_flashcard'),
+    path('deck/<int:deck_id>/delete/', views.delete_deck, name='delete_deck'),
     path('study/', views.study, name='study'),
     path('deck/<int:deck_id>/study/', views.study_deck, name='study_deck'),
     path('study/<int:deck_id>/results/', views.study_results, name='study_results'),
     path('api/flashcards/<int:deck_id>/', views.get_flashcards, name='get_flashcards'),
+    
 ]

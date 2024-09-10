@@ -2,11 +2,59 @@
 {% load static %}
 
 {% block content %}
-<h2>Register</h2>
-<form method="post">
+
+<form method="post" class="register-form">
     {% csrf_token %}
-    {{ form.as_p }}
+    {% for field in form %}
+        {% if field.name != 'password1' and field.name != 'password2' %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error-message">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    
+    <div class="form-group password-field">
+        {{ form.password1.label_tag }}
+        {{ form.password1 }}
+        {% if form.password1.errors %}
+            <div class="error-message">{{ form.password1.errors }}</div>
+        {% endif %}
+        <div class="password-instructions">
+            <p>{{ form.password1.help_text|safe }}</p>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        {{ form.password2.label_tag }}
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+            <div class="error-message">{{ form.password2.errors }}</div>
+        {% endif %}
+    </div>
+    
     <button type="submit">Register</button>
+    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
 </form>
-<p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordField = document.querySelector('.password-field');
+    const instructions = passwordField.querySelector('.password-instructions');
+
+    passwordField.addEventListener('mouseenter', function() {
+        instructions.style.display = 'block';
+    });
+
+    passwordField.addEventListener('mouseleave', function() {
+        instructions.style.display = 'none';
+    });
+});
+</script>
 {% endblock %}

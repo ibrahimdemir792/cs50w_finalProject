@@ -3,8 +3,9 @@
 {% load static %}
 
 {% block content %}
-<h2>Create a New Deck</h2>
-<form method="post">
+
+<form method="post" class="create-deck-form">
+    <h2>Create a New Deck</h2>
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Create Deck</button>
