@@ -2,41 +2,42 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Language Flashcards{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'flashcards/styles.css' %}?v=1">
-    <script>
-        const userIsAuthenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
-    </script>
-    <script src="{% static 'flashcards/script.js' %}"></script>
-    {% block scripts %}
-    {% endblock %}
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1><a id="logo" href="{% url 'home' %}" style="text-decoration: none; color: inherit;">Language Flashcards</a></h1>
-            <nav>
-                <ul>
-                    <li><a id="home-button" href="{% url 'home' %}">Home</a></li>                    
-                    {% if user.is_authenticated %}                        
-                        <li><a id="create-deck-button" href="{% url 'create_deck' %}">Create Deck</a></li>
-                        <li><a id="study-button" href="{% url 'study' %}">Study</a></li>      
-                        <li><a href="{% url 'profile' %}">Profile</a></li>
-                        <li><a href="{% url 'logout' %}">Logout</a></li>
-                    {% else %}
-                        <li><a href="{% url 'login' %}">Login</a></li>
-                        <li><a href="{% url 'register' %}">Register</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <main class="container">
-        {% block content %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Language Flashcards{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'flashcards/styles1.css' %}?v=1">
+        <script>
+            const userIsAuthenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
+        </script>
+        <script src="{% static 'flashcards/script.js' %}"></script>
+        {% block scripts %}
         {% endblock %}
-    </main>
-</body>
+    </head>
+    <body>
+        
+        <header>
+            <div class="container">
+                <h1><a id="logo" href="{% url 'home' %}" style="text-decoration: none; color: inherit;">Language Flashcards</a></h1>
+                <nav>
+                    <ul>
+                        <li><a id="home-button" href="{% url 'home' %}">Home</a></li>                    
+                        {% if user.is_authenticated %}                        
+                            <li><a id="create-deck-button" href="{% url 'create_deck' %}">Create Deck</a></li>
+                            <li><a id="study-button" href="{% url 'study' %}">Study</a></li>      
+                            <li><a href="{% url 'profile' %}">Profile</a></li>
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                            <li><a href="{% url 'register' %}">Register</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main class="container">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </body>
 </html>

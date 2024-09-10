@@ -1,15 +1,53 @@
 {% extends 'flashcards/base.html' %}
 
 {% block content %}
-<h2>{{ user.username }}'s Profile</h2>
-<p>Email: {{ user.email }}</p>
-<h3>Your Decks</h3>
-<ul>
-    {% for deck in decks %}
-        <li><a href="{% url 'deck_detail' deck.id %}">{{ deck.name }}</a></li>
-    {% empty %}
-        <li>You haven't created any decks yet.</li>
-    {% endfor %}
-</ul>
-<a href="{% url 'create_deck' %}">Create a New Deck</a>
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <!-- Replace with user's avatar if available -->
+            <img src="https://via.placeholder.com/150" alt="Profile picture">
+        </div>
+        <div class="profile-info">
+            <h1>{{ user.username }}</h1>
+            <p>{{ user.email }}</p>
+            <p>Joined: {{ user.date_joined|date:"F d, Y" }}</p>
+        </div>
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-item">
+            <span class="stat-value">{{ decks.count }}</span>
+            <span class="stat-label">Decks</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value">{{ total_cards }}</span>
+            <span class="stat-label">Cards</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value">5</span>
+            <span class="stat-label">Study Streak</span>
+        </div>
+    </div>
+
+    <h2>Your Decks</h2>
+    <div class="decks-container">
+        {% for deck in decks %}
+        <div class="deck-card">
+            <h3>{{ deck.name }}</h3>
+            <p>{{ deck.flashcard_set.count }} cards</p>
+            <p>Language: {{ deck.language }}</p>
+            <div class="deck-actions">
+                <a href="{% url 'deck_detail' deck.id %}" class="button">View</a>
+                <a href="{% url 'study_deck' deck.id %}" class="button">Study</a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="no-decks">You haven't created any decks yet.</p>
+        {% endfor %}
+    </div>
+
+    <div class="create-deck">
+        <a href="{% url 'create_deck' %}" class="button primary">Create a New Deck</a>
+    </div>
+</div>
 {% endblock %}

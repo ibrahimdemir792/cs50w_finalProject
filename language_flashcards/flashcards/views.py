@@ -46,7 +46,12 @@ def logout_view(request):
 @login_required
 def profile(request):
     decks = Deck.objects.filter(user=request.user)
-    return render(request, 'flashcards/profile.html', {'decks': decks})
+    total_cards = Flashcard.objects.filter(deck__user=request.user).count()
+    context = {
+        'decks': decks,
+        'total_cards': total_cards,
+    }
+    return render(request, 'flashcards/profile.html', context)
 
 @login_required
 def create_deck(request):
