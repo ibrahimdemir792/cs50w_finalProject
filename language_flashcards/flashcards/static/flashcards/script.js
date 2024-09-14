@@ -9,7 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    document.getElementById('next-btn').addEventListener('click', showNextCard);
+    document.getElementById('next-btn').addEventListener('click', () => {
+        console.log('Next button clicked');
+        showNextCard();
+    });
 
     // Check answer while user is typing
     document.getElementById('answer').addEventListener('input', checkAnswer);
@@ -43,9 +46,16 @@ function showNextCard() {
     const randomIndex = Math.floor(Math.random() * flashcardsArray.length);
     currentFlashcard = flashcardsArray[randomIndex]; // Save the current flashcard
 
+    // Remove the flipped class from the flashcard
+    if (document.getElementById('flashcard').classList.contains('flipped')) {
+        document.getElementById('flashcard').classList.remove('flipped');
+    }
+
     // Update the UI with the new flashcard content
-    document.getElementById('flashcard-front').textContent = currentFlashcard.front;
-    document.getElementById('flashcard-back').textContent = currentFlashcard.back;
+    setTimeout(() => {
+        document.getElementById('flashcard-front').textContent = currentFlashcard.front;
+        document.getElementById('flashcard-back').textContent = currentFlashcard.back;
+    }, 500);
 }
 
 function dropFlashcard(flashcard) {
@@ -81,6 +91,7 @@ function checkAnswer() {
         if (currentFlashcard) {
             dropFlashcard(currentFlashcard); // Remove the correct card from the array
         }
+        // Remove the flipped class from the flashcard
         if (document.getElementById('flashcard').classList.contains('flipped')) {
             document.getElementById('flashcard').classList.remove('flipped');
         }
