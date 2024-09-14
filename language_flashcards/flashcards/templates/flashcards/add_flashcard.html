@@ -2,10 +2,19 @@
 {% load static %}
 
 {% block content %}
-<h2>Add Flashcard to {{ deck.name }}</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Flashcard</button>
-</form>
+<div class="add-flashcard-form">
+    <h2>Add Flashcard to {{ deck.name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.front.id_for_label }}">Front</label>
+            <input type="text" name="{{ form.front.name }}" id="{{ form.front.id_for_label }}" placeholder="Enter front side text" required>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.back.id_for_label }}">Back</label>
+            <input type="text" name="{{ form.back.name }}" id="{{ form.back.id_for_label }}" placeholder="Enter back side text" required>
+        </div>
+        <button type="submit">Add Flashcard</button>
+    </form>
+</div>
 {% endblock %}

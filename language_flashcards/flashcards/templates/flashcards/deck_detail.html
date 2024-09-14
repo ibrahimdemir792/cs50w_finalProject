@@ -4,14 +4,12 @@
 {% block content %}
 <div class="deck-detail-container">
     <h2 class="deck-title">{{ deck.name }}</h2>
-    <p class="deck-description">{{ deck.description }}</p>
 
     <div class="flashcards-grid">
         {% for card in flashcards %}
             <div class="flashcard-item">
                 <div class="flashcard-content">
-                    <div class="flashcard-front">{{ card.front }}</div>
-                    <div class="flashcard-back">{{ card.back }}</div>
+                    <div class="flashcard-front"> {{ card.front }} <br> {{ card.back }}</div>
                 </div>
                 <div class="flashcard-actions">
                     <a href="{% url 'edit_flashcard' deck.id card.id %}" class="action-btn edit-btn">Edit</a>

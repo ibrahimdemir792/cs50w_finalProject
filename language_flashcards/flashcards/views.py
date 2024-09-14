@@ -10,12 +10,9 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 
+# Render the home page
 def home(request):
-    if request.user.is_authenticated:
-        decks = Deck.objects.filter(user=request.user)
-    else:
-        decks = []
-    return render(request, 'flashcards/index.html', {'decks': decks})
+    return render(request, 'flashcards/index.html')
 
 def register(request):
     if request.method == 'POST':
@@ -80,6 +77,8 @@ def add_flashcard(request, deck_id):
         if form.is_valid():
             flashcard = form.save(commit=False)
             flashcard.deck = deck
+            flashcard.front = flashcard.front.capitalize()
+            flashcard.back = flashcard.back.capitalize()
             flashcard.save()
             return redirect('deck_detail', deck_id=deck.id)
     else:
@@ -94,6 +93,8 @@ def edit_flashcard(request, deck_id, card_id):
     if request.method == 'POST':
         form = FlashcardForm(request.POST, instance=flashcard)
         if form.is_valid():
+            flashcard.front = flashcard.front.capitalize()
+            flashcard.back = flashcard.back.capitalize()
             form.save()
             return redirect('deck_detail', deck_id=deck.id)
     else:
@@ -128,15 +129,12 @@ def study(request):
 @login_required
 def study_deck(request, deck_id):
     deck = get_object_or_404(Deck, id=deck_id, user=request.user)
-    return render(request, 'flashcards/study.html', {'deck': deck, 'deck_id': deck_id})
+    flashcards = list(Flashcard.objects.filter(deck=deck).values('id', 'front', 'back'))
+    return render(request, 'flashcards/study.html', {'deck': deck, 'deck_id': deck_id, 'flashcards': flashcards})
 
 @login_required
 def get_flashcards(request, deck_id):
     deck = get_object_or_404(Deck, id=deck_id, user=request.user)
     flashcards = list(Flashcard.objects.filter(deck=deck).values('id', 'front', 'back'))
     return JsonResponse(flashcards, safe=False)
-
-@login_required
-def study_results(request, deck_id):
-    deck = get_object_or_404(Deck, id=deck_id, user=request.user)
-    return render(request, 'flashcards/study_results.html', {'deck': deck})
+    

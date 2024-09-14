@@ -14,14 +14,7 @@
         margin-left: 0;
         margin-top: 20px;
     }
-
-    .stats-container {
-        flex-direction: column;
-    }
-
-    .stat-item {
-        margin-bottom: 15px;
-    }}
+}
 
 
 /* profile page styles */
@@ -181,7 +174,6 @@
 
 
 
-
 /* Style for the register form */
 .register-form {
     max-width: 300px;
@@ -239,6 +231,7 @@
             margin: 0.5rem 0;
         }
     }}
+
 
 
 /* Style for the create deck form */
@@ -369,6 +362,7 @@
         font-weight: bold;
         animation: fadeIn 0.8s ease-out 0.4s both;
     }}
+
 
 
 /* Deck Detail Styles */
@@ -700,34 +694,78 @@ nav ul li a {
     border: 1px solid #dddddd;
 }
 
-.scoreboard {
+
+#score-display {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
-.progress-bar {
-    width: 100%;
-    background-color: #e9ecef;
-    border-radius: 5px;
-    overflow: hidden;
+#answer {
+    display: block;
+    width: 50%; // Reduced from 80% to 60% to make the input field smaller in x direction
+    margin: 20px auto;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #3498db;
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+        border-color: #2980b9;
+        box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+    }
 }
 
-.progress {
-    height: 20px;
-    background-color: #007bff;
-    transition: width 0.5s ease-in-out;
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.btn {
-    margin: 5px;
+#flip-btn, #next-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 10px;
 }
 
 #flip-btn {
-    display: block;
-    margin: 10px auto;
+    background-color: #2ecc71;
+    color: white;
+
+    &:hover {
+        background-color: #27ae60;
+    }
 }
 
-#result-form {
-    text-align: center;
-    margin-top: 20px;
+#next-btn {
+    background-color: #3498db;
+    color: white;
+
+    &:hover {
+        background-color: #2980b9;
+    }
+}
+
+#back-to-list {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #95a5a6;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #7f8c8d;
+    }
 }

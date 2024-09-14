@@ -1,41 +1,29 @@
 {% extends 'flashcards/base.html' %}
 {% load static %}
-
+{% block title %}Study Session{% endblock %}
 {% block content %}
+<body data-deck-id="{{ deck.id }}"></body>
 <h2>Study Session: {{ deck.name }}</h2>
-
-<div class="scoreboard">
-    <p>Progress: 0 / {{ deck.flashcard_set.count }} (0%)</p>
-    <div class="progress-bar">
-        <div class="progress" style="width: 0%;"></div>
-    </div>
-</div>
 
 <div id="score-display">
     <p>Score: <span id="current-score">0</span></p>
 </div>
 
 <div class="flashcard" id="flashcard">
-    <div class="flashcard-inner">
-        <div class="flashcard-front"></div>
-        <div class="flashcard-back"></div>
+    <div class="flashcard-inner">      
+        <div class="flashcard-front" id="flashcard-front">{{ flashcards.0.front }}</div>
+        <div class="flashcard-back" id="flashcard-back">{{ flashcards.0.back }}</div>
     </div>
 </div>
 
-<button id="flip-btn" class="btn btn-primary">Flip Card</button>
+<input type="text" id="answer" class="answer" placeholder="Enter your answer">
 
-<form id="result-form">
-    <button type="submit" name="result" value="correct" class="btn btn-success">I got it right</button>
-    <button type="submit" name="result" value="incorrect" class="btn btn-danger">I got it wrong</button>
-</form>
+<div class="button-container">
+    <button id="flip-btn" class="btn btn-primary">Flip Card</button>
+    <button id="next-btn" class="btn btn-secondary">Next Card</button>
+</div>
+
 
 <a href="{% url 'study' %}" class="btn btn-secondary" id="back-to-list">Back to Deck List</a>
 
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    const deckId = {{ deck.id }};
-</script>
-<script src="{% static 'flashcards/study.js' %}"></script>
 {% endblock %}

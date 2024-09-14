@@ -32,8 +32,7 @@ urlpatterns = [
     path('deck/<int:deck_id>/delete/', views.delete_deck, name='delete_deck'),
     path('study/', views.study, name='study'),
     path('deck/<int:deck_id>/study/', views.study_deck, name='study_deck'),
-    path('study/<int:deck_id>/results/', views.study_results, name='study_results'),
-    path('api/flashcards/<int:deck_id>/', views.get_flashcards, name='get_flashcards'),
+    path('get_flashcards/<int:deck_id>/', views.get_flashcards, name='get_flashcards'),
     path("__reload__/", include("django_browser_reload.urls")),
     
 ]
